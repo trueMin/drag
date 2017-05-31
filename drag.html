@@ -23,14 +23,35 @@
 				var x = ev.pageX - box.offsetLeft;
 				var y = ev.pageY - box.offsetTop;
 				document.onmousemove = function(ev) {
-					box.style.left = ev.pageX - x + "px";
-					box.style.top = ev.pageY - y + "px";
+					L = ev.pageX - x;
+					T = ev.pageY - y;
+					if(L < 0){ 
+					//当DIV的Left小于0，也就是移出左边
+						L = 0; 
+						//就把DIV的Left设置为0，就不能移出左边
+					} else if(L > document.documentElement.clientWidth - box.offsetWidth){
+						 //屏幕宽度减去DIV的宽度就得出了DIV到达最右边的宽度，如果Left大于这个像素
+						L = document.documentElement.clientWidth - box.offsetWidth; 
+						//就把Left设置为这个像素
+					}
+					if(T < 0){ 
+						//当DIV的To小于0，也就是移出左边
+						T = 0; 
+						//就把DIV的Top设置为0，就不能移出上边
+					} else if(T > document.documentElement.clientHeight - box.offsetHeight){ 
+						//屏幕高度减去DIV的高度就得出了DIV到达最下面边的像素，如果Top大于这个像素
+						T = document.documentElement.clientHeight - box.offsetHeight; 
+						//就把Top设置为这个像素
+					}
+					box.style.left = L + 'px';
+					box.style.top = T + 'px';
 				}
 				document.onmouseup = function() {
 					document.onmousemove = null;
 					document.onmouseup = null;
 				}
 				ev.preventDefault();
+				//return false;
 			}
 			
 		</script>
